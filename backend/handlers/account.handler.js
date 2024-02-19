@@ -24,16 +24,19 @@ const transferMoney = async (req, res) => {
   try {
     const userAcc = await Account.findOne({ userId }).session(session);
     if (!userAcc) {
+      await session.abortTransaction();
       return res.status(411).json({ error: "User does not exists" });
     }
 
     if (userAcc && userAcc.balance < amount) {
+      await session.abortTransaction();
       return res.status(400).json({ error: "Insufficient balance" });
     }
 
     const sender = await Account.findOne({ userId: to }).session(session);
 
     if (!sender) {
+      await session.abortTransaction();
       return res.status(400).json({ error: "Invalid account" });
     }
 
