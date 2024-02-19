@@ -1,8 +1,9 @@
 const { User } = require("../schema/user.schema");
+const { Account } = require("../schema/account.schema");
 const jwt = require("jsonwebtoken");
 const zod = require("zod");
 const bcrypt = require("bcrypt");
-const JWT_SECRET = process.env.JWT_SECRET;  
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const signUpSchema = zod.object({
   username: zod.string(),
@@ -29,6 +30,13 @@ const signUp = async (req, res) => {
       lastName,
       password: encryptedPassword,
     });
+    
+    // Initialize user with random balance
+    await Account.create({
+      userId: newUser._id,
+      balance: 1 + Math.random() * 10000
+    })
+
     const token = jwt.sign({ userId: newUser._id }, JWT_SECRET);
     return res
       .status(201)
