@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
 import { authConfig } from "../../../lib/auth";
+import { NextResponse } from "next/server";
 
 export const GET = async () => {
   const user = await getServerSession(authConfig);
