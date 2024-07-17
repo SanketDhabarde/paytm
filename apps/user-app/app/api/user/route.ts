@@ -6,6 +6,8 @@ export const GET = async () => {
     data: {
       email: "test@123",
       name: "test",
+      phone: "1234567899",
+      password: "asdasdad"
     },
   });
 
