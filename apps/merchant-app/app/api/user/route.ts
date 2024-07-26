@@ -3,8 +3,21 @@ import { authConfig } from "../../../lib/auth";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
-  const user = await getServerSession(authConfig);
-  return NextResponse.json({
-    user,
-  });
+  const session = await getServerSession(authConfig);
+  console.log({session});
+
+  if (session?.user) {
+    return NextResponse.json({
+      user: session.user,
+    });
+  }
+
+  return NextResponse.json(
+    {
+      message: "You are not logged in!",
+    },
+    {
+      status: 403,
+    }
+  );
 };
