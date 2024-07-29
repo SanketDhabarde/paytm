@@ -14,11 +14,13 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String? @unique
-  name     String?
-  phone    String  @unique
-  password String
+  id                Int                 @id @default(autoincrement())
+  email             String?             @unique
+  name              String?
+  phone             String              @unique
+  password          String
+  Balance           Balance[]
+  OnRampTransection OnRampTransection[]
 }
 
 model Merchant {
@@ -28,7 +30,32 @@ model Merchant {
   auth_type AuthType
 }
 
+model Balance {
+  id     Int  @id @default(autoincrement())
+  userId Int  @unique
+  amount Int
+  locked Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model OnRampTransection {
+  id        Int          @id @default(autoincrement())
+  userId    Int
+  status    OnRampStatus
+  token     String       @unique
+  amount    Int
+  provider  String
+  startTime DateTime
+  user      User         @relation(fields: [userId], references: [id])
+}
+
 enum AuthType {
   Google
   GitHub
+}
+
+enum OnRampStatus {
+  Success
+  Failed
+  Processiong
 }
