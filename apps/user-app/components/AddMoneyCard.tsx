@@ -21,7 +21,7 @@ export const AddMoney = () => {
   const [redirectUrl, setRedirectUrl] = useState(
     SUPPORTED_BANKS[0]?.redirectUrl
   );
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
   const [provider, setProvider] = useState(SUPPORTED_BANKS[0]?.name || "");
 
   return (
@@ -31,7 +31,7 @@ export const AddMoney = () => {
           label={"Amount"}
           value={amount}
           placeholder={"Amount"}
-          onChange={(v) => setAmount(Number(v))}
+          onChange={(v) => setAmount(v)}
         />
         <div className="py-4 text-left">Bank</div>
         <Select
@@ -52,8 +52,7 @@ export const AddMoney = () => {
         <div className="flex justify-center pt-4">
           <Button
             onClick={async () => {
-              console.log({ amount, provider });
-              await createOnrampTransection(amount, provider);
+              await createOnrampTransection(Number(amount), provider);
               // window.location.href = redirectUrl || "";
             }}
           >
