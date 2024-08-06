@@ -2,11 +2,13 @@
 
 export const TextInput = ({
   placeholder,
+  value,
   onChange,
   label,
 }: {
   placeholder: string;
-  onChange: (value: string) => void;
+  value: number;
+  onChange: (v: string) => void;
   label: string;
 }) => {
   return (
@@ -15,6 +17,7 @@ export const TextInput = ({
         {label}
       </label>
       <input
+        value={value}
         onChange={(e) => onChange(e.target.value)}
         type="text"
         id="first_name"

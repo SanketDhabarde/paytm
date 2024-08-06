@@ -2,8 +2,10 @@
 export const Select = ({
   options,
   onSelect,
+  value,
 }: {
-  onSelect: (value: string) => void;
+  onSelect: (v: string) => void;
+  value: string;
   options: {
     key: string;
     value: string;
@@ -11,6 +13,7 @@ export const Select = ({
 }) => {
   return (
     <select
+      value={value}
       onChange={(e) => {
         onSelect(e.target.value);
       }}
